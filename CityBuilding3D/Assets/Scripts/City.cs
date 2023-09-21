@@ -23,6 +23,12 @@ public class City : MonoBehaviour
     {
         Instance = this;
     }
+
+    void Start()
+    {
+        UpdateStatText();
+    }
+
     public void OnPlaceBuilding(Building building)
     {
         money -= building.buildingPreset.cost;
@@ -43,6 +49,55 @@ public class City : MonoBehaviour
 
     private void UpdateStatText()
     {
-        
+        statsText.text = string.Format("Day: {0} Money: {1} Population: {2} / {3} Jobs: {4} / {5} Food: {6}", 
+            new object[7] { day, money, curPopulation, maxPopulation, curJobs, maxJobs, curFood }); ;
     }
+
+    public void EndTurn()
+    {
+        day++;
+        CalculateMoney();
+        CalculatePopulation();
+        CalculateJobs();
+        CalculateFood();
+
+        UpdateStatText();
+
+    }
+    void CalculateMoney()
+    {
+        money += curJobs * incomePerJob;
+        foreach(Building building in buildings)
+        {
+            money -= building.buildingPreset.costPerTurn;
+        }
+    }
+    void CalculatePopulation()
+    {
+        if(curFood>=curPopulation && curPopulation<maxPopulation)
+        {
+            curFood -= curPopulation / 4;
+            curPopulation = Mathf.Min(curPopulation+(curFood/4), maxPopulation);
+        }
+        else if(curFood<curPopulation)
+        {
+            curPopulation = curFood;
+        }
+
+    }
+    void CalculateJobs()
+    {
+        curJobs = Mathf.Min(curPopulation, maxJobs);
+
+    }
+    void CalculateFood()
+    {
+        curFood = 0;
+
+        foreach(Building building in buildings)
+        {
+            curFood += building.buildingPreset.food;
+        }
+    }
+    
 }
