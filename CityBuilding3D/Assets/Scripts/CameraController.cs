@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         curZoom += Input.GetAxis("Mouse ScrollWheel") * -zoomSpeed;
-        curZoom = Mathf.Clamp(curZoom, 20, 50);//curZoom = Mathf.Clamp(curZoom, minZoom, maxZoom);
+        curZoom = Mathf.Clamp(curZoom, minZoom, maxZoom);
 
         cam.transform.localPosition = Vector3.up * curZoom;
 
@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour
             float y = Input.GetAxis("Mouse Y");
 
             curXRot += -y * rotateSpeed;
-            curXRot = Mathf.Clamp(curXRot, minXRot, maxXRot);//curXRot = Mathf.Clamp(curXRot, minXRot, maxXRot);
+            curXRot = Mathf.Clamp(curXRot, minXRot, maxXRot);
 
             transform.eulerAngles = new Vector3(curXRot, transform.eulerAngles.y + (x + rotateSpeed), 0.0f);
         }
