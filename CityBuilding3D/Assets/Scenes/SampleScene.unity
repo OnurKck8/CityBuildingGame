@@ -1600,8 +1600,8 @@ MonoBehaviour:
   minXRot: -85
   maxXRot: -10
   zoomSpeed: 20
-  minZoom: 50
-  maxZoom: 5
+  minZoom: 10
+  maxZoom: 50
 --- !u!1 &1556013876
 GameObject:
   m_ObjectHideFlags: 0
